@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Hello World" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>個人資料表</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 class="mt-3">
+        <span class="text-primary" style="--i: 1">個</span
+        ><span class="text-primary" style="--i: 2">人</span
+        ><span class="text-success" style="--i: 3">資</span
+        ><span class="text-danger" style="--i: 4">料</span
+        ><span class="text-warning" style="--i: 5">表</span>
+      </h1>
+
+      <br />
+
+      <div class="text-end">
+        <button
+          type="button"
+          class="btn btn-primary rounded-pill"
+          id="addbutton"
+          data-bs-toggle="modal"
+          data-bs-target="#addButtonModal">
+          新增 <i class="bi bi-plus-lg"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary rounded-pill"
+          id="searchbutton"
+          data-bs-toggle="modal"
+          data-bs-target="#searchButtonModal">
+          搜尋 <i class="bi bi-search"></i>
+        </button>
+      </div>
+
+      <br />
+      <div class="row">
+        <table
+          id="cardtable"
+          class="align-middle rwd-table table table-striped-columns table-borderless">
+          <thead>
+            <tr class="d-none d-lg-table-row slide-out">
+              <th>中文名字</th>
+              <th>英文名字</th>
+              <th>性別</th>
+              <th>電子信箱</th>
+              <th>手機號碼</th>
+              <th>修改</th>
+              <th>刪除</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!--新增表單-->
+      <div
+        class="modal fade"
+        id="addButtonModal"
+        tabindex="-1"
+        aria-labelledby="addNewForm"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="addNewForm">新增表單</h2>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form
+                method="post"
+                id="addform"
+                class="needs-validation"
+                onsubmit="return false;"
+                novalidate>
+                <div class="mb-3">
+                  <label for="addcnname" class="form-label">中文名字</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="addcnname"
+                    required />
+                  <div class="invalid-feedback">請輸入中文名字</div>
+                </div>
+                <div class="mb-3">
+                  <label for="addenname" class="form-label">英文名字</label>
+                  <input type="text" class="form-control" id="addenname" />
+                </div>
+                <div class="mb-3">
+                  <label class="mb-2"> 性別 </label>
+                  <div class="d-flex">
+                    <div class="form-check pe-3">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="addsex"
+                        id="man"
+                        vale="man"
+                        checked />
+                      <label class="form-check-label" for="man"> 男 </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="addsex"
+                        id="woman"
+                        vale="woman" />
+                      <label class="form-check-label" for="woman"> 女 </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">電子信箱</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    required />
+                  <div class="invalid-feedback">請輸入電子信箱</div>
+                </div>
+                <div class="mb-3">
+                  <label for="phone" class="form-label">手機號碼</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone"
+                    pattern="[0-9]{4}[0-9]{6}"
+                    required />
+                  <div class="invalid-feedback">請輸入10碼手機號碼</div>
+                </div>
+                <div class="text-end">
+                  <button type="submit" class="btn btn-primary" id="addData">
+                    新增
+                  </button>
+                  <button type="button" class="btn btn-primary" id="resetData">
+                    重新填寫
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+                    取消
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--搜尋表單-->
+      <div
+        class="modal fade"
+        id="searchButtonModal"
+        tabindex="-1"
+        aria-labelledby="searchModal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="searchModal">搜尋表單</h2>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="post" id="searchform">
+                <div class="mb-3">
+                  <label for="secnname" class="form-label">中文姓名</label>
+                  <input type="text" class="form-control" id="secnname" />
+                </div>
+                <div class="mb-3">
+                  <label for="seenname" class="form-label">英文姓名</label>
+                  <input type="text" class="form-control" id="seenname" />
+                </div>
+                <div class="mb-3">
+                  <label class="mb-2"> 性別 </label>
+                  <div class="d-flex">
+                    <div class="form-check pe-3">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="sesex"
+                        id="seman"
+                        vale="man"
+                        checked />
+                      <label class="form-check-label" for="seman"> 男 </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="sesex"
+                        id="sewoman"
+                        vale="woman" />
+                      <label class="form-check-label" for="sewoman"> 女 </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="seemail" class="form-label">電子信箱</label>
+                  <input type="email" class="form-control" id="seemail" />
+                </div>
+                <div class="mb-3">
+                  <label for="sephone" class="form-label">手機號碼</label>
+                  <input type="tel" class="form-control" id="sephone" />
+                </div>
+                <div class="text-end">
+                  <button type="button" class="btn btn-primary" id="searchData">
+                    搜尋
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="resetSearchData">
+                    重新填寫
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+                    取消
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--修改表單-->
+      <div
+        class="modal fade"
+        id="modifyModal"
+        tabindex="-1"
+        aria-labelledby="modModal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="modModal">修改表單</h2>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="post" id="modifyform">
+                <div class="mb-3">
+                  <label for="mocnname" class="form-label">中文姓名</label>
+                  <input type="text" class="form-control" id="mocnname" />
+                </div>
+                <div class="mb-3">
+                  <label for="moenname" class="form-label">英文姓名</label>
+                  <input type="text" class="form-control" id="moenname" />
+                </div>
+                <div class="mb-3">
+                  <label class="mb-2"> 性別 </label>
+                  <div class="d-flex">
+                    <div class="form-check pe-3">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="mosex"
+                        id="modifyman"
+                        vale="man"
+                        checked />
+                      <label class="form-check-label" for="modifyman">
+                        男
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="mosex"
+                        id="modifywoman"
+                        vale="woman" />
+                      <label class="form-check-label" for="modifywoman">
+                        女
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="moemail" class="form-label">電子信箱</label>
+                  <input type="email" class="form-control" id="moemail" />
+                </div>
+                <div class="mb-3">
+                  <label for="mophone" class="form-label">手機號碼</label>
+                  <input type="tel" class="form-control" id="mophone" />
+                </div>
+                <div class="formsid" style="display: none">
+                  <input name="sid" id="modifysid" />
+                </div>
+                <div class="text-end">
+                  <button type="button" class="btn btn-primary" id="modifyData">
+                    修改
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="resetModifyData">
+                    重新填寫
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+                    取消
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--刪除提示-->
+      <div
+        class="modal fade"
+        id="deleteModal"
+        tabindex="-1"
+        aria-labelledby="deleteLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="deleteLabel">確認刪除</h2>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <div class="modal-body">確定要刪除這筆資料嗎?</div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" id="confirmDelete">
+                刪除
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal">
+                取消
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+      <p>
+        整體的主題是依照貴公司的logo顏色來配色的。 </br>
+        特效: </br>
+        1.左上角標題動畫</br>
+        2.列表滑入動畫 </br>
+        3.滑鼠滑入資料時有黑框顯示</br>
+        4.在較小的螢幕中以顏色區隔開每筆資料
+      </p>
+      <!-- <pre>
+      人易科技 前端上機測驗題
+      
+      環境：
+          - 將資料夾放到網頁伺服器中，用瀏覽器執行 http://網址/demo/index.html
+          - 依個人能力完成下列要求
+      要求：
+        1. 美化它，並說明要表達的感覺/主題，訂定的風格、配色
+        2. 將index.html中的js程式碼分離成檔案demo.js，並增加style.css檔案
+        3. 刪除鍵補上確認Dialog，且新增/修改/刪除的dialog使用bootstrap Modal實現 (bootstrap取代jQueryUI)
+        4. 表格(table)奇偶數列而有不同的底色，且滑鼠移到表格資料上時，以滑鼠指到的格子為中心，十字線上的 列/欄 都要變色 (列欄變色各得分50%)
+          |   | 色  |   |    |
+          | 色 | 鼠 | 色 | 色 |
+          |   | 色  |   |    |
+          |   | 色  |   |    |
+        5. 加二個欄位: 手機,電子信箱，並實作 欄位驗証及錯誤訊息顯示
+          - 必填：中文姓名、手機、信箱、性別
+          - 格式：手機、信箱
+          > ※ 註：手機填寫時為10碼數字，格式後面處理
+          > ※ 註：清單及編輯表單都要做
+        6. 特效實作 & 資料處理
+          - bootstrap tooltip：滑鼠「移到」人名上面時，顯示說明文字，內容格式： [性別]中文名子(英文名子)   (字串串接)
+          - bootstrap popover：滑鼠「點擊」手機上面時，顯示手機資訊，內容格式： 聯絡方式：xxxx-xxx-xxx    (字串格式轉換)
+        7. 實作bootstrap RWD效果
+        8. 提高Javascript檔物件化程度
+        9. 實作ajax
+        10. 增加自定特效，並說明其內容 (需4個特效，1個佔25%)
+  
+  
+        ※ 美化：選擇要表達的感覺/主題，然後訂定風格、確定配色
+        ※ 本範例為前端工程師練習題，只專注版面、美化、頁面行為，不需管後端資料
+        ※ 頁面編碼: UTF-8
+    </pre> -->
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="demo.js"></script>
+    </div>
+  </body>
+</html>

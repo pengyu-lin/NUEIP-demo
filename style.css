@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+}
+@media (min-width: 992px) {
+  table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  td,
+  th {
+    padding: 10px;
+    position: relative;
+  }
+  td:hover {
+    outline: 2px solid black;
+    outline-offset: -2px;
+  }
+
+  td:hover::before {
+    background-color: #ffa;
+    content: "\00a0";
+    height: 100%;
+    left: -5000px;
+    position: absolute;
+    top: 0;
+    width: 10000px;
+    z-index: -1;
+  }
+
+  td:hover::after {
+    background-color: #ffa;
+    content: "\00a0";
+    height: 10000px;
+    left: 0;
+    position: absolute;
+    top: -5000px;
+    width: 100%;
+    z-index: -1;
+  }
+  tr {
+    transition: all 1s ease-in-out;
+  }
+
+  tr.slide-out {
+    transform: translateX(100%);
+  }
+}
+
+.btn-primary {
+  background: #0095d8;
+  color: white;
+  border-color: #0095d8;
+}
+
+.btn-primary:hover {
+  background: white;
+  color: #0095d8;
+  border-color: #0095d8;
+}
+
+.btn-danger:hover {
+  background: white;
+  color: #dc3545;
+}
+@media (max-width: 992px) {
+  .rwd-table td:before {
+    content: attr(data-th) " : ";
+    font-weight: bold;
+    width: 6.5em;
+    display: inline-block;
+  }
+  tr:nth-of-type(2n) {
+    background: #d2edf9;
+  }
+}
+
+h1 span {
+  display: inline-block;
+  animation: wiggle 2s infinite;
+  animation-delay: calc(0.1s * var(--i));
+}
+
+@keyframes wiggle {
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-20px);
+  }
+}
